@@ -1,0 +1,28 @@
+# Ignore swap files
+*.swp
+*.swo
+
+# Ignore backup files
+*.bak
+*.tmp
+
+# Ignore undo history files
+*.un~
+
+# Ignore directories created by plugins
+plugged/
+packer_compiled.lua
+site/
+undodir/
+session/
+shada/
+view/
+swap/
+
+# Ignore log files
+log/
+*.log
+
+# Ignore Neovim-generated files
+*.rplugin~
+
