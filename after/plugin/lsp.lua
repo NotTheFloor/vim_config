@@ -7,11 +7,13 @@ local cmp_select = {behavior = cmp.SelectBehavior.Select}
 cmp.setup({
 	sources = {
 		{name = 'nvim_lsp'},
+        {name = 'luasnip'},
 	},
 	snippet = {
 		expand = function(args)
 			-- Need Neovim v0.10 for snippet
-			vim.snippet.expand(args.body)
+			-- vim.snippet.expand(args.body)
+            luasnip.lsp_expand(args.body)
 		end,
 	},
 	mapping = cmp.mapping.preset.insert({
@@ -19,6 +21,7 @@ cmp.setup({
 		['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
 		['<C-y>'] = cmp.mapping.confirm({ select = true }),
 		['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.close(),
 	}),
 })
 
@@ -53,6 +56,12 @@ lsp_zero.extend_lspconfig({
 require'lspconfig'.eslint.setup{}
 require'lspconfig'.clangd.setup{}
 require'lspconfig'.asm_lsp.setup{}
-require'lspconfig'.pyright.setup{}
+--require'lspconfig'.pyright.setup{}
+require'lspconfig'.pyright.setup{
+  root_dir = function()
+    return vim.fn.getcwd()  -- This sets the root directory to the current working directory in Neovim
+  end, 
+  cmd = { "env", "NODE_OPTIONS=--max-old-space-size=8192", "pyright-langserver", "--stdio" },
+}
 require'lspconfig'.rust_analyzer.setup{}
 
